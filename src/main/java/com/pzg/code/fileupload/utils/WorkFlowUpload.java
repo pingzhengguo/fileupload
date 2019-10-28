@@ -1,5 +1,6 @@
 package com.pzg.code.fileupload.utils;
 
+import com.pzg.code.fileupload.config.FastDfsValueConfig;
 import com.pzg.code.fileupload.entity.ProcessFastFile;
 import com.pzg.code.fileupload.mapper.ProcessFastFileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class WorkFlowUpload {
     /**
      * 加载文件服务器的地址
      */
-    private String fastDfsValueConfig = "http://10.0.91.222:8999/";
+    @Autowired
+    private FastDfsValueConfig fastDfsValueConfig;
 
     /**
      * 采用springmvc提供的文件上传
@@ -75,7 +77,7 @@ public class WorkFlowUpload {
                             processFastFile.setFileUploadTime(timeStamp);
                             //添加文件信息进fastdfs_file表
                             processFastFileMapper.insert(processFastFile);
-                            processFastFile.setFileServerPath(fastDfsValueConfig + path);
+                            processFastFile.setFileServerPath(fastDfsValueConfig.getFastdfsAddress() + path);
                             processFastFileMap.put(processFastFile.getId(), processFastFile);
                         }
                     } catch (Exception e) {

@@ -3,6 +3,7 @@ package com.pzg.code.fileupload.utils;
 import com.alibaba.druid.util.StringUtils;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.pzg.code.fileupload.config.FastDfsValueConfig;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,8 @@ public class FastDFSClientWrapper {
 
     @Autowired
     private FastFileStorageClient storageClient;
-
-    private String fastDfsValueConfig = "http://10.0.91.222:8999/";
+    @Autowired
+    private FastDfsValueConfig fastDfsValueConfig;
 
     /**
      * 上传文件
@@ -53,7 +54,7 @@ public class FastDFSClientWrapper {
 
     // 封装图片完整URL地址
     private String getResAccessUrl(StorePath storePath) {
-        String fileUrl = fastDfsValueConfig + storePath.getFullPath();
+        String fileUrl = fastDfsValueConfig.getFastdfsAddress() + storePath.getFullPath();
         return fileUrl;
     }
 
